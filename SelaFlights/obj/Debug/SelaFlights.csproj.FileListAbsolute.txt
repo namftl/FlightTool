@@ -8,3 +8,13 @@ C:\Users\o\source\repos\SelaFlights\SelaFlights\obj\Debug\SelaFlights.csproj.Gen
 C:\Users\o\source\repos\SelaFlights\SelaFlights\obj\Debug\SelaFlights.csproj.CoreCompileInputs.cache
 C:\Users\o\source\repos\SelaFlights\SelaFlights\obj\Debug\SelaFlights.exe
 C:\Users\o\source\repos\SelaFlights\SelaFlights\obj\Debug\SelaFlights.pdb
+C:\Users\o\source\repos\SelaFlights\Rep\FlightTool\SelaFlights\bin\Debug\SelaFlights.exe.config
+C:\Users\o\source\repos\SelaFlights\Rep\FlightTool\SelaFlights\bin\Debug\SelaFlights.exe
+C:\Users\o\source\repos\SelaFlights\Rep\FlightTool\SelaFlights\bin\Debug\SelaFlights.pdb
+C:\Users\o\source\repos\SelaFlights\Rep\FlightTool\SelaFlights\obj\Debug\SelaFlights.csprojAssemblyReference.cache
+C:\Users\o\source\repos\SelaFlights\Rep\FlightTool\SelaFlights\obj\Debug\SelaFlights.AppScr.resources
+C:\Users\o\source\repos\SelaFlights\Rep\FlightTool\SelaFlights\obj\Debug\SelaFlights.Properties.Resources.resources
+C:\Users\o\source\repos\SelaFlights\Rep\FlightTool\SelaFlights\obj\Debug\SelaFlights.csproj.GenerateResource.cache
+C:\Users\o\source\repos\SelaFlights\Rep\FlightTool\SelaFlights\obj\Debug\SelaFlights.csproj.CoreCompileInputs.cache
+C:\Users\o\source\repos\SelaFlights\Rep\FlightTool\SelaFlights\obj\Debug\SelaFlights.exe
+C:\Users\o\source\repos\SelaFlights\Rep\FlightTool\SelaFlights\obj\Debug\SelaFlights.pdb

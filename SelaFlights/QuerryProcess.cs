@@ -6,30 +6,42 @@ using System.Threading.Tasks;
 
 namespace SelaFlights
 {
+    /// <summary>
+    /// this class handles all the data and parameter passing between the file, calculator and input,
+    /// returns data in result format
+    /// </summary>
     class QuerryProcess
     {
-        QueryEnum queryEnum;
+        QuerryEnum QueryEnum;
         string[] UserInput;
-        DataGetter dataGetter;
-        Calculator calculator;
-        PrintEdit printEditor;
+        Calculator Calculator;
+        PrintEdit PrintEditor;
         CsvReader FileReader;
-        List<FlightInfo> flights;
-        string resultString;        
-        object[] results;
+        List<FlightInfo> AlteredFlights;
+        List<FlightInfo> OriginalFlights;
+        object[] Results;
 
+        /// <summary>
+        /// init querry process with all data from file, create two lists for reset
+        /// </summary>
+        /// <param name="sourceFile"></param>
         public QuerryProcess(string sourceFile)
         {
             FileReader = new CsvReader(sourceFile);
-            flights = FileReader.ReadFromFile();
-            queryEnum = QueryEnum.NONE;
-            resultString = "";            
+            AlteredFlights = FileReader.ReadFromFile();
+            OriginalFlights = AlteredFlights.ToList();
+            QueryEnum = QuerryEnum.NONE;
         }
 
+        /// <summary>
+        /// return all current (unique) source cities in "[city], [state]" format
+        /// </summary>
+        /// <param name="SrcCity"></param>
+        /// <returns></returns>
         public string[] GetCityArray(bool SrcCity = true)
         {
             List<string> Cities = new List<string>();
-            foreach (FlightInfo flight in flights)
+            foreach (FlightInfo flight in AlteredFlights)
             {
                 string city =  SrcCity?  (flight.OriginCity + ", " + flight.OriginState): 
                                         (flight.DestCity + ", " + flight.DestState);
@@ -40,77 +52,106 @@ namespace SelaFlights
             return Cities.ToArray();
         }
 
+        /// <summary>
+        /// given a selected origin city - select only flights with it
+        /// </summary>
+        /// <param name="originCity"></param>
         public void SelectOriginCity(string originCity)
         {
             if (originCity.Length == 0)
                 return;
             string[] cityAndState = originCity.Split(',');
             cityAndState[1] = cityAndState[1].Trim();
-            int originalLength = flights.Count;
-            for(int i = 0; i < flights.Count; )
+            int originalLength = AlteredFlights.Count;
+            for(int i = 0; i < AlteredFlights.Count; )
             {
-                if ((String.Compare(flights[i].OriginCity,cityAndState[0]) != 0) || (String.Compare(flights[i].OriginState,cityAndState[1])) != 0)
-                    flights.RemoveAt(i);
+                if ((String.Compare(AlteredFlights[i].OriginCity,cityAndState[0]) != 0) || (String.Compare(AlteredFlights[i].OriginState,cityAndState[1])) != 0)
+                    AlteredFlights.RemoveAt(i);
                 else
                     i++;
             }
         }
 
+        /// <summary>
+        /// update userinput, according to querry perform calculation and save results
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public bool PerformQuery(string[] input)
         {
             UserInput = input;
-            if(queryEnum == QueryEnum.AVG_DEP_DEL)
+            if(QueryEnum == QuerryEnum.AVG_DEP_DEL)
             {
                 SelectDestCity(input[1]);
-                calculator = new Calculator(flights);
-                results = calculator.CalculateQuery(queryEnum);
+                Calculator = new Calculator(AlteredFlights);
+                Results = Calculator.CalculateQuery(QueryEnum);
             }
-            if(queryEnum == QueryEnum.MOST_fLIGHTS)
+            if(QueryEnum == QuerryEnum.MOST_fLIGHTS)
             {
                 SelectOriginCity(input[0]);
-                calculator = new Calculator(flights);
-                results = calculator.CalculateQuery(queryEnum);
+                Calculator = new Calculator(AlteredFlights);
+                Results = Calculator.CalculateQuery(QueryEnum);
             }
-            if(queryEnum == QueryEnum.FARTHEST_DESTINATIONS)
+            if(QueryEnum == QuerryEnum.FARTHEST_DESTINATIONS)
             {
                 SelectOriginCity(input[0]);
-                calculator = new Calculator(flights);
-                results = calculator.CalculateQuery(queryEnum);
+                Calculator = new Calculator(AlteredFlights);
+                Results = Calculator.CalculateQuery(QueryEnum);
             }
 
             return true;
         }
 
+        /// <summary>
+        /// given a destination city - select only flights with it
+        /// </summary>
+        /// <param name="destCity"></param>
         public void SelectDestCity(string destCity)
         {
             if (destCity.Length == 0)
                 return;
             string[] cityAndState = destCity.Split(',');
             cityAndState[1] = cityAndState[1].Trim();
-            int originalLength = flights.Count;
-            for (int i = 0; i < flights.Count;)
+            int originalLength = AlteredFlights.Count;
+            for (int i = 0; i < AlteredFlights.Count;)
             {
-                if ((String.Compare(flights[i].DestCity, cityAndState[0]) != 0) || (String.Compare(flights[i].DestState, cityAndState[1])) != 0)
-                    flights.RemoveAt(i);
+                if ((String.Compare(AlteredFlights[i].DestCity, cityAndState[0]) != 0) || (String.Compare(AlteredFlights[i].DestState, cityAndState[1])) != 0)
+                    AlteredFlights.RemoveAt(i);
                 else
                     i++;
             }
         }
 
-        public void StartQuery(QueryEnum query)
+        /// <summary>
+        /// defines current querry performed
+        /// </summary>
+        /// <param name="query"></param>
+        public void StartQuery(QuerryEnum query)
         {
-            queryEnum = query;            
+            QueryEnum = query;            
         }
         
+        /// <summary>
+        /// return result according to querry member as formatted string
+        /// </summary>
+        /// <returns></returns>
         public string GetResults()
         {
-            printEditor = new PrintEdit();
-            return (printEditor.EditReuslts(UserInput, results, queryEnum));
+            PrintEditor = new PrintEdit();
+            return (PrintEditor.EditReuslts(UserInput, Results, QueryEnum));
+        }
+
+        /// <summary>
+        /// refill the flight list with all unfilterd flights
+        /// </summary>
+        public void ResetResults()
+        {
+            AlteredFlights = OriginalFlights.ToList();
         }
 
     }
 
-    public enum QueryEnum
+    public enum QuerryEnum
     {
         NONE,
         AVG_DEP_DEL,

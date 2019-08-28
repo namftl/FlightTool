@@ -28,9 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppScr));
-            this.QueryPanel = new System.Windows.Forms.Panel();
+            this.QuerryPanel = new System.Windows.Forms.Panel();
             this.Q4 = new System.Windows.Forms.Button();
             this.Q3 = new System.Windows.Forms.Button();
             this.Q2 = new System.Windows.Forms.Button();
@@ -44,7 +43,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.CityB = new System.Windows.Forms.TextBox();
             this.CityA = new System.Windows.Forms.TextBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ResultsPanel = new System.Windows.Forms.Panel();
             this.BackResults = new System.Windows.Forms.Button();
             this.ResultText = new System.Windows.Forms.TextBox();
@@ -55,7 +53,7 @@
             this.QueryBack = new System.Windows.Forms.Button();
             this.FileConfirm = new System.Windows.Forms.Button();
             this.FilePanel = new System.Windows.Forms.Panel();
-            this.QueryPanel.SuspendLayout();
+            this.QuerryPanel.SuspendLayout();
             this.InputPanel.SuspendLayout();
             this.ResultsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -64,17 +62,17 @@
             // 
             // QueryPanel
             // 
-            this.QueryPanel.AutoSize = true;
-            this.QueryPanel.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.QueryPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.QueryPanel.Controls.Add(this.Q4);
-            this.QueryPanel.Controls.Add(this.Q3);
-            this.QueryPanel.Controls.Add(this.Q2);
-            this.QueryPanel.Controls.Add(this.Q1);
-            this.QueryPanel.Location = new System.Drawing.Point(269, 12);
-            this.QueryPanel.Name = "QueryPanel";
-            this.QueryPanel.Size = new System.Drawing.Size(303, 193);
-            this.QueryPanel.TabIndex = 0;
+            this.QuerryPanel.AutoSize = true;
+            this.QuerryPanel.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.QuerryPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.QuerryPanel.Controls.Add(this.Q4);
+            this.QuerryPanel.Controls.Add(this.Q3);
+            this.QuerryPanel.Controls.Add(this.Q2);
+            this.QuerryPanel.Controls.Add(this.Q1);
+            this.QuerryPanel.Location = new System.Drawing.Point(269, 12);
+            this.QuerryPanel.Name = "QueryPanel";
+            this.QuerryPanel.Size = new System.Drawing.Size(303, 193);
+            this.QuerryPanel.TabIndex = 0;
             // 
             // Q4
             // 
@@ -218,11 +216,6 @@
             this.CityA.Size = new System.Drawing.Size(121, 20);
             this.CityA.TabIndex = 0;
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
             // ResultsPanel
             // 
             this.ResultsPanel.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -282,6 +275,8 @@
             // 
             // SelectFileButton
             // 
+            this.SelectFileButton.FlatAppearance.BorderSize = 2;
+            this.SelectFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SelectFileButton.Location = new System.Drawing.Point(21, 0);
             this.SelectFileButton.Name = "SelectFileButton";
             this.SelectFileButton.Size = new System.Drawing.Size(172, 109);
@@ -344,11 +339,11 @@
             this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.ResultsPanel);
             this.Controls.Add(this.InputPanel);
-            this.Controls.Add(this.QueryPanel);
+            this.Controls.Add(this.QuerryPanel);
             this.Name = "AppScr";
             this.Text = "AppScr";
-            this.QueryPanel.ResumeLayout(false);
-            this.QueryPanel.PerformLayout();
+            this.QuerryPanel.ResumeLayout(false);
+            this.QuerryPanel.PerformLayout();
             this.InputPanel.ResumeLayout(false);
             this.InputPanel.PerformLayout();
             this.ResultsPanel.ResumeLayout(false);
@@ -364,7 +359,7 @@
         
         #endregion
 
-        private System.Windows.Forms.Panel QueryPanel;
+        private System.Windows.Forms.Panel QuerryPanel;
         private System.Windows.Forms.Button Q1;
         private System.Windows.Forms.Button Q4;
         private System.Windows.Forms.Button Q3;
@@ -374,7 +369,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox CityB;
         private System.Windows.Forms.TextBox CityA;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Button BackInput;
         private System.Windows.Forms.Panel ResultsPanel;
         private System.Windows.Forms.Button BackResults;
