@@ -12,14 +12,16 @@ namespace SelaFlights
     public class Calculator
     {
         List<FlightInfo> Flights;
-        object[] Input;
         /// <summary>
         /// inits calculator with relevant flight list
         /// </summary>
         /// <param name="flightInfos"></param>
         public Calculator(List<FlightInfo> flightInfos)
         {
-            Flights = flightInfos.ToList();
+            if (flightInfos != null)
+                Flights = flightInfos.ToList();
+            else
+                Flights = new List<FlightInfo>();
         }
 
         /// <summary>
@@ -30,7 +32,6 @@ namespace SelaFlights
         public object[] CalculateQuery(QuerryEnum querry, object[] input = null)
         {
             object[] results = new object[1];
-            Input = input;
             if (querry == QuerryEnum.AVG_DEP_DEL)
             {
                 results = new object[3];
@@ -50,35 +51,8 @@ namespace SelaFlights
                 results = new object[1];
                 results[0] = FiveFarthestDest();
             }
-            if(querry == QuerryEnum.SHORTEST_PATH)
-            {
-                KeyValuePair<string, double> trip = MinDelayTrip();
-                results = new object[2];
-                results[0] = trip.Key;
-                results[1] = trip.Value;
-            }
-
-            return results;
-        }
-
-        private KeyValuePair<string, double> MinDelayTrip()
-        {
-            KeyValuePair<string, double> trip = new KeyValuePair<string, double>("aaa", 2 );
-            List<FlightInfo> firstFlight = new List<FlightInfo>();
-            string[] cityAndStateSrc = ((string)Input[0]).Split(',');
-            cityAndStateSrc[1] = cityAndStateSrc[1].Trim();
-            List<FlightInfo> secondFlight = new List<FlightInfo>();
-            string[] cityAndStateDest = ((string)Input[0]).Split(',');
-            cityAndStateDest[1] = cityAndStateDest[1].Trim();
-            foreach (FlightInfo flight in Flights)
-            {
-                if ((String.Compare(flight.OriginCity, cityAndStateSrc[0]) != 0) || (String.Compare(flight.OriginState, cityAndStateSrc[1])) != 0)
-                    firstFlight.Add(flight);
-                if ((String.Compare(flight.DestCity, cityAndStateDest[0]) != 0) || (String.Compare(flight.OriginState, cityAndStateDest[1])) != 0)
-                    secondFlight.Add(flight);
-            }
             
-            return trip;
+            return results;
         }
 
         /// <summary>

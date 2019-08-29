@@ -41,14 +41,16 @@ namespace SelaFlights
         public string[] GetCityArray(bool SrcCity = true)
         {
             List<string> Cities = new List<string>();
-            foreach (FlightInfo flight in AlteredFlights)
+            if (AlteredFlights != null)
             {
-                string city =  SrcCity?  (flight.OriginCity + ", " + flight.OriginState): 
-                                        (flight.DestCity + ", " + flight.DestState);
-                if (!Cities.Contains(city))
-                    Cities.Add(city);
+                foreach (FlightInfo flight in AlteredFlights)
+                {
+                    string city = SrcCity ? (flight.OriginCity + ", " + flight.OriginState) :
+                                            (flight.DestCity + ", " + flight.DestState);
+                    if (!Cities.Contains(city))
+                        Cities.Add(city);
+                }
             }
-
             return Cities.ToArray();
         }
 
@@ -58,11 +60,13 @@ namespace SelaFlights
         /// <param name="originCity"></param>
         public void SelectOriginCity(string originCity)
         {
-            if (originCity.Length == 0)
+            if ((originCity.Length == 0) || (!originCity.Contains(',')))
+            {
+                AlteredFlights = null;
                 return;
+            }
             string[] cityAndState = originCity.Split(',');
             cityAndState[1] = cityAndState[1].Trim();
-            int originalLength = AlteredFlights.Count;
             for(int i = 0; i < AlteredFlights.Count; )
             {
                 if ((String.Compare(AlteredFlights[i].OriginCity,cityAndState[0]) != 0) || (String.Compare(AlteredFlights[i].OriginState,cityAndState[1])) != 0)
@@ -79,27 +83,29 @@ namespace SelaFlights
         /// <returns></returns>
         public bool PerformQuery(string[] input)
         {
-            UserInput = input;
+            UserInput = input;            
+
             if(Querry == QuerryEnum.AVG_DEP_DEL)
             {
                 SelectDestCity(input[1]);
+                if (AlteredFlights == null)
+                    return false;
                 Calculator = new Calculator(AlteredFlights);
                 Results = Calculator.CalculateQuery(Querry);
             }
             if(Querry == QuerryEnum.MOST_fLIGHTS)
             {
                 SelectOriginCity(input[0]);
+                if (AlteredFlights == null)
+                    return false;
                 Calculator = new Calculator(AlteredFlights);
                 Results = Calculator.CalculateQuery(Querry);
             }
             if(Querry == QuerryEnum.FARTHEST_DESTINATIONS)
             {
                 SelectOriginCity(input[0]);
-                Calculator = new Calculator(AlteredFlights);
-                Results = Calculator.CalculateQuery(Querry);
-            }
-            if(Querry == QuerryEnum.SHORTEST_PATH)
-            {
+                if (AlteredFlights == null)
+                    return false;
                 Calculator = new Calculator(AlteredFlights);
                 Results = Calculator.CalculateQuery(Querry);
             }
@@ -113,8 +119,11 @@ namespace SelaFlights
         /// <param name="destCity"></param>
         public void SelectDestCity(string destCity)
         {
-            if (destCity.Length == 0)
+            if ((destCity.Length == 0) || (!destCity.Contains(',')))
+            {
+                AlteredFlights = null;
                 return;
+            }
             string[] cityAndState = destCity.Split(',');
             cityAndState[1] = cityAndState[1].Trim();
             int originalLength = AlteredFlights.Count;
@@ -161,7 +170,6 @@ namespace SelaFlights
         NONE,
         AVG_DEP_DEL,
         MOST_fLIGHTS,
-        FARTHEST_DESTINATIONS,
-        SHORTEST_PATH
+        FARTHEST_DESTINATIONS
     }
 }

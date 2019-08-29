@@ -30,13 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppScr));
             this.QuerryPanel = new System.Windows.Forms.Panel();
-            this.Q4 = new System.Windows.Forms.Button();
             this.Q3 = new System.Windows.Forms.Button();
             this.Q2 = new System.Windows.Forms.Button();
             this.Q1 = new System.Windows.Forms.Button();
             this.InputPanel = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.CityC = new System.Windows.Forms.TextBox();
             this.ConfirmInput = new System.Windows.Forms.Button();
             this.BackInput = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -60,36 +57,23 @@
             this.FilePanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // QueryPanel
+            // QuerryPanel
             // 
             this.QuerryPanel.AutoSize = true;
             this.QuerryPanel.BackColor = System.Drawing.SystemColors.HighlightText;
             this.QuerryPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.QuerryPanel.Controls.Add(this.Q4);
             this.QuerryPanel.Controls.Add(this.Q3);
             this.QuerryPanel.Controls.Add(this.Q2);
             this.QuerryPanel.Controls.Add(this.Q1);
             this.QuerryPanel.Location = new System.Drawing.Point(269, 12);
-            this.QuerryPanel.Name = "QueryPanel";
+            this.QuerryPanel.Name = "QuerryPanel";
             this.QuerryPanel.Size = new System.Drawing.Size(303, 193);
             this.QuerryPanel.TabIndex = 0;
-            // 
-            // Q4
-            // 
-            this.Q4.AutoSize = true;
-            this.Q4.Location = new System.Drawing.Point(3, 157);
-            this.Q4.Name = "Q4";
-            this.Q4.Padding = new System.Windows.Forms.Padding(3);
-            this.Q4.Size = new System.Drawing.Size(120, 29);
-            this.Q4.TabIndex = 6;
-            this.Q4.Text = "Minimal Delay for trip";
-            this.Q4.UseVisualStyleBackColor = true;
-            this.Q4.Click += new System.EventHandler(this.Query_Click);
             // 
             // Q3
             // 
             this.Q3.AutoSize = true;
-            this.Q3.Location = new System.Drawing.Point(3, 107);
+            this.Q3.Location = new System.Drawing.Point(3, 133);
             this.Q3.Name = "Q3";
             this.Q3.Padding = new System.Windows.Forms.Padding(3);
             this.Q3.Size = new System.Drawing.Size(131, 29);
@@ -101,7 +85,7 @@
             // Q2
             // 
             this.Q2.AutoSize = true;
-            this.Q2.Location = new System.Drawing.Point(3, 53);
+            this.Q2.Location = new System.Drawing.Point(3, 69);
             this.Q2.Name = "Q2";
             this.Q2.Padding = new System.Windows.Forms.Padding(3);
             this.Q2.Size = new System.Drawing.Size(125, 29);
@@ -127,8 +111,6 @@
             this.InputPanel.AutoSize = true;
             this.InputPanel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.InputPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.InputPanel.Controls.Add(this.label3);
-            this.InputPanel.Controls.Add(this.CityC);
             this.InputPanel.Controls.Add(this.ConfirmInput);
             this.InputPanel.Controls.Add(this.BackInput);
             this.InputPanel.Controls.Add(this.label2);
@@ -139,22 +121,6 @@
             this.InputPanel.Name = "InputPanel";
             this.InputPanel.Size = new System.Drawing.Size(776, 100);
             this.InputPanel.TabIndex = 1;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(549, 16);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(31, 13);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "CityC";
-            // 
-            // CityC
-            // 
-            this.CityC.Location = new System.Drawing.Point(491, 42);
-            this.CityC.Name = "CityC";
-            this.CityC.Size = new System.Drawing.Size(141, 20);
-            this.CityC.TabIndex = 6;
             // 
             // ConfirmInput
             // 
@@ -184,7 +150,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(362, 16);
+            this.label2.Location = new System.Drawing.Point(501, 16);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(31, 13);
             this.label2.TabIndex = 3;
@@ -193,7 +159,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(193, 16);
+            this.label1.Location = new System.Drawing.Point(252, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(31, 13);
             this.label1.TabIndex = 2;
@@ -201,7 +167,7 @@
             // 
             // CityB
             // 
-            this.CityB.Location = new System.Drawing.Point(316, 42);
+            this.CityB.Location = new System.Drawing.Point(457, 42);
             this.CityB.Name = "CityB";
             this.CityB.Size = new System.Drawing.Size(130, 20);
             this.CityB.TabIndex = 1;
@@ -211,10 +177,12 @@
             // 
             this.CityA.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.CityA.BackColor = System.Drawing.SystemColors.Window;
-            this.CityA.Location = new System.Drawing.Point(153, 42);
+            this.CityA.Location = new System.Drawing.Point(211, 42);
             this.CityA.Name = "CityA";
             this.CityA.Size = new System.Drawing.Size(121, 20);
             this.CityA.TabIndex = 0;
+            this.CityA.Click += new System.EventHandler(this.CityA_ClickOrText);
+            this.CityA.TextChanged += new System.EventHandler(this.CityA_ClickOrText);
             // 
             // ResultsPanel
             // 
@@ -361,7 +329,6 @@
 
         private System.Windows.Forms.Panel QuerryPanel;
         private System.Windows.Forms.Button Q1;
-        private System.Windows.Forms.Button Q4;
         private System.Windows.Forms.Button Q3;
         private System.Windows.Forms.Button Q2;
         private System.Windows.Forms.Panel InputPanel;
@@ -375,8 +342,6 @@
         private System.Windows.Forms.TextBox ResultText;
         private System.Windows.Forms.Button ExitButton;
         private System.Windows.Forms.Button ConfirmInput;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox CityC;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button SelectFileButton;
         private System.Windows.Forms.TextBox FileNameText;

@@ -15,12 +15,15 @@ namespace SelaFlights
         QuerryProcess QuerryProcess;
         QuerryEnum CurrentQuerry;
         private OpenFileDialog FileDialog;
+        bool FileOk;
+        bool SrcChanged;
         /// <summary>
         /// disable all elements in form except the 'select file' option
         /// </summary>
         public AppScr()
         {            
             InitializeComponent();
+            FileOk = false;
             SetAllControlsFont(this.Controls);
             DisableControls(this.QuerryPanel);
             DisableControls(this.InputPanel);
@@ -42,6 +45,12 @@ namespace SelaFlights
             {
                 string FileName = FileDialog.FileName;
                 this.FileNameText.Text = FileName;
+                FileOk = true;
+            }
+            else
+            {
+                FileOk = false;
+                this.FileNameText.Text = "";
             }
         }
 
@@ -53,7 +62,7 @@ namespace SelaFlights
         /// <param name="e"></param>
         private void FileConfirm_Click(object sender, EventArgs e)
         {
-            if (FileDialog == null)
+            if ((FileDialog == null)||(this.FileNameText.Text != FileDialog.FileName)||(!FileOk))
                 return;
             DisableControls(this.FilePanel);
             EnableControls(this.QuerryPanel);
@@ -87,6 +96,7 @@ namespace SelaFlights
             EnableControls(this.InputPanel);
             ((Control)sender).Enabled = true;
             DisableInput(CurrentQuerry);
+            SrcChanged = false;
         }
 
         /// <summary>
@@ -101,33 +111,65 @@ namespace SelaFlights
             FileConfirm_Click(sender, e);
 
         }
+        /// <summary>
+        /// create a new autocomplete list when modifying this box (only once)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CityA_ClickOrText(object sender, EventArgs e)
+        {
+            if (SrcChanged == false)
+            {
+                QuerryProcess.ResetResults();
+                SetAutoCompleteSource(this.CityA);
+                SrcChanged = true;
+            }
+        }
 
         /// <summary>
         /// if querry depends on two city inputs - filter results according to first city
-        /// the set sources for input
+        /// the set sources for input, reset results if srcChanged,
+        /// change bool srcChanged to reset sources if needed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CityB_Click(object sender, EventArgs e)
         {
             if (CurrentQuerry == QuerryEnum.AVG_DEP_DEL)
-                QuerryProcess.SelectOriginCity(this.CityA.Text);
+            {
+                if (SrcChanged)
+                {
+                    SrcChanged = false;
+                    QuerryProcess.SelectOriginCity(this.CityA.Text);
+                    this.CityB.Text = "";
+                }
+            }
             SetAutoCompleteSource(this.CityB, false);
         }
         
         /// <summary>
-        /// pass input to querry process and perform querry
+        /// pass input to querry process and perform querry, handle missing input,
         /// freeze input section, unfreeze result section
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ConfirmInput_Click(object sender, EventArgs e)
         {
-            string[] input = { this.CityA.Text, this.CityB.Text, this.CityC.Text };
-            QuerryProcess.PerformQuery(input);
+            string[] input = { this.CityA.Text, this.CityB.Text};
+            this.ResultText.Font = new Font("Impact", 14, FontStyle.Italic);
+            if (input[0].Length == 0)
+                this.ResultText.Text = "Missing Source input";
+            else if ((CurrentQuerry == QuerryEnum.AVG_DEP_DEL) && (input[1].Length == 0))
+                this.ResultText.Text = "Missing Destination input";
+            else
+            {
+                if (QuerryProcess.PerformQuery(input))
+                    this.ResultText.Text = QuerryProcess.GetResults();
+                else
+                    this.ResultText.Text = "Querry not found, Please try again";
+            }
             DisableControls(this.InputPanel);
             EnableControls(this.ResultsPanel);
-            this.ResultText.Text = QuerryProcess.GetResults();
         }
 
         /// <summary>
@@ -156,8 +198,6 @@ namespace SelaFlights
                 return QuerryEnum.MOST_fLIGHTS;
             if (((Button)sender).Name == "Q3")
                 return QuerryEnum.FARTHEST_DESTINATIONS;
-            if (((Button)sender).Name == "Q4")
-                return QuerryEnum.SHORTEST_PATH;
             return QuerryEnum.NONE;
         }
 
@@ -174,8 +214,6 @@ namespace SelaFlights
                 case QuerryEnum.FARTHEST_DESTINATIONS:
                 case QuerryEnum.MOST_fLIGHTS:
                     this.CityB.Enabled = false;
-                    break;
-                case QuerryEnum.SHORTEST_PATH:
                     break;
             }
         }        
@@ -234,9 +272,6 @@ namespace SelaFlights
             text.AutoCompleteSource = AutoCompleteSource.CustomSource;
             text.AutoCompleteCustomSource = source;
         }
-
-        
-
 
     }
 }

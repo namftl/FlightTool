@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace SelaFlights
 {
+    /// <summary>
+    /// this class reads a given file, split row by comma, select required (predetermined) info from line,
+    /// return a list of all rows infos
+    /// </summary>
     class CsvReader
     {
         string fileName;
@@ -15,11 +19,19 @@ namespace SelaFlights
         const char SEPERATOR = ',';
         const string NA_FIELD = "NA";
 
+        /// <summary>
+        /// init with file name
+        /// </summary>
+        /// <param name="p_fileName"></param>
         public CsvReader(string p_fileName)
         {
             fileName = p_fileName;
         }
         
+        /// <summary>
+        /// parse each line for important info, return a list of it
+        /// </summary>
+        /// <returns></returns>
         public List<FlightInfo> ReadFromFile()
         {
             string line;
@@ -38,7 +50,13 @@ namespace SelaFlights
             return flights;
         }
 
-        public FlightInfo GetFlightInfo(string line, char seperator)
+        /// <summary>
+        /// parse line into flightinfo format
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="seperator"></param>
+        /// <returns></returns>
+        private FlightInfo GetFlightInfo(string line, char seperator)
         {
             line = line.Replace("\"", "");
             string[] splittedLine = line.Split(seperator);
@@ -68,6 +86,9 @@ namespace SelaFlights
         }
     }
 
+    /// <summary>
+    /// determines the required locations in splitted line of desired info
+    /// </summary>
     public enum eFlightFields
     {
         FlightId = 0,
@@ -80,6 +101,9 @@ namespace SelaFlights
         Distance = 57
     }
 
+    /// <summary>
+    /// this class contains all desired information from a row in the read file
+    /// </summary>
     public class FlightInfo
     {
         public int FlightId { get; set; }
