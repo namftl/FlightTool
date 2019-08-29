@@ -12,7 +12,7 @@ namespace SelaFlights
     /// </summary>
     class QuerryProcess
     {
-        QuerryEnum QueryEnum;
+        QuerryEnum Querry;
         string[] UserInput;
         Calculator Calculator;
         PrintEdit PrintEditor;
@@ -30,7 +30,7 @@ namespace SelaFlights
             FileReader = new CsvReader(sourceFile);
             AlteredFlights = FileReader.ReadFromFile();
             OriginalFlights = AlteredFlights.ToList();
-            QueryEnum = QuerryEnum.NONE;
+            Querry = QuerryEnum.NONE;
         }
 
         /// <summary>
@@ -80,23 +80,28 @@ namespace SelaFlights
         public bool PerformQuery(string[] input)
         {
             UserInput = input;
-            if(QueryEnum == QuerryEnum.AVG_DEP_DEL)
+            if(Querry == QuerryEnum.AVG_DEP_DEL)
             {
                 SelectDestCity(input[1]);
                 Calculator = new Calculator(AlteredFlights);
-                Results = Calculator.CalculateQuery(QueryEnum);
+                Results = Calculator.CalculateQuery(Querry);
             }
-            if(QueryEnum == QuerryEnum.MOST_fLIGHTS)
+            if(Querry == QuerryEnum.MOST_fLIGHTS)
             {
                 SelectOriginCity(input[0]);
                 Calculator = new Calculator(AlteredFlights);
-                Results = Calculator.CalculateQuery(QueryEnum);
+                Results = Calculator.CalculateQuery(Querry);
             }
-            if(QueryEnum == QuerryEnum.FARTHEST_DESTINATIONS)
+            if(Querry == QuerryEnum.FARTHEST_DESTINATIONS)
             {
                 SelectOriginCity(input[0]);
                 Calculator = new Calculator(AlteredFlights);
-                Results = Calculator.CalculateQuery(QueryEnum);
+                Results = Calculator.CalculateQuery(Querry);
+            }
+            if(Querry == QuerryEnum.SHORTEST_PATH)
+            {
+                Calculator = new Calculator(AlteredFlights);
+                Results = Calculator.CalculateQuery(Querry);
             }
 
             return true;
@@ -128,7 +133,7 @@ namespace SelaFlights
         /// <param name="query"></param>
         public void StartQuery(QuerryEnum query)
         {
-            QueryEnum = query;            
+            Querry = query;            
         }
         
         /// <summary>
@@ -138,7 +143,7 @@ namespace SelaFlights
         public string GetResults()
         {
             PrintEditor = new PrintEdit();
-            return (PrintEditor.EditReuslts(UserInput, Results, QueryEnum));
+            return (PrintEditor.EditReuslts(UserInput, Results, Querry));
         }
 
         /// <summary>

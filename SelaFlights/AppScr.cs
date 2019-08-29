@@ -156,6 +156,8 @@ namespace SelaFlights
                 return QuerryEnum.MOST_fLIGHTS;
             if (((Button)sender).Name == "Q3")
                 return QuerryEnum.FARTHEST_DESTINATIONS;
+            if (((Button)sender).Name == "Q4")
+                return QuerryEnum.SHORTEST_PATH;
             return QuerryEnum.NONE;
         }
 
@@ -168,11 +170,9 @@ namespace SelaFlights
             switch(querry)
             {
                 case QuerryEnum.AVG_DEP_DEL:
-                    this.CityC.Enabled = false;
                     break;
                 case QuerryEnum.FARTHEST_DESTINATIONS:
                 case QuerryEnum.MOST_fLIGHTS:
-                    this.CityC.Enabled = false;
                     this.CityB.Enabled = false;
                     break;
                 case QuerryEnum.SHORTEST_PATH:
