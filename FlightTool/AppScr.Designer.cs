@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppScr));
             this.QuerryPanel = new System.Windows.Forms.Panel();
             this.Q3 = new System.Windows.Forms.Button();
             this.Q2 = new System.Windows.Forms.Button();
@@ -233,7 +232,7 @@
             // pictureBox1
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Image = global::FlightTool.Properties.Resources.Untitled;
             this.pictureBox1.Location = new System.Drawing.Point(599, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(189, 152);
